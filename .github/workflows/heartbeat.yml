@@ -1,0 +1,21 @@
+name: Base Sepolia Heartbeat
+on:
+  schedule:
+    - cron: '0 0 * * *' # Berjalan otomatis setiap jam 12 malam
+  workflow_dispatch:     # Bisa dijalankan manual dari tab Actions
+
+jobs:
+  active:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Gunakan LTS untuk stabilitas di server
+      - run: npm install
+      - name: Run Heartbeat
+        env:
+          RPC_URL: ${{ secrets.RPC_URL }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        run: node src/monitor.js
+
