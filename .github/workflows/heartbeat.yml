@@ -1,21 +1,29 @@
 name: Base Sepolia Heartbeat
 on:
   schedule:
-    - cron: '0 0 * * *' # Berjalan otomatis setiap jam 12 malam
-  workflow_dispatch:     # Bisa dijalankan manual dari tab Actions
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   active:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # IZIN PENTING: Untuk update README
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20' # Gunakan LTS untuk stabilitas di server
+          node-version: '20'
       - run: npm install
-      - name: Run Heartbeat
+      - name: Run Heartbeat & Update README
         env:
           RPC_URL: ${{ secrets.RPC_URL }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: node src/monitor.js
-
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "Indraseven"
+          git config --global user.email "Indrasevenid"
+          git add README.md
+          git commit -m "docs: auto-update status [skip ci]" || echo "No changes"
+          git push
