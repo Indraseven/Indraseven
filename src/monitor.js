@@ -4,43 +4,40 @@ import fs from 'fs';
 
 async function main() {
     const rpc = process.env.RPC_URL;
-    if (!rpc) throw new Error("❌ RPC_URL missing");
+    const pk = process.env.PRIVATE_KEY;
+
+    if (!rpc || !pk) throw new Error("❌ Missing Environment Variables");
 
     const provider = new ethers.JsonRpcProvider(rpc);
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+    const wallet = new ethers.Wallet(pk, provider);
 
     console.log(`--- Base Sepolia Activity Log ---`);
     const balance = await provider.getBalance(wallet.address);
     const ethBalance = ethers.formatEther(balance);
 
-    // 1. Jalankan Transaksi Heartbeat
+    // Kirim Heartbeat
     console.log("Sending heartbeat...");
-    try {
-        const tx = await wallet.sendTransaction({ to: wallet.address, value: 0 });
-        const receipt = await tx.wait();
-        console.log(`✅ Success: ${tx.hash}`);
+    const tx = await wallet.sendTransaction({ to: wallet.address, value: 0 });
+    await tx.wait();
+    console.log(`✅ Success: ${tx.hash}`);
 
-        // 2. Update README.md (Dynamic Dashboard)
-        const timestamp = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
-        const content = `# Indraseven's Web3 Monitor 🚀
+    // Update README.md secara Dinamis
+    const timestamp = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
+    const dashboard = `# Indraseven's Web3 Monitor 🚀
 
-> Ini adalah dashboard otomatis yang dikelola oleh Termux & GitHub Actions.
+> Automated by GitHub Actions & Termux.
 
 ### 📊 Wallet Status (Base Sepolia)
 - **Address:** \`${wallet.address}\`
 - **Balance:** \`${ethBalance} ETH\`
 - **Last Heartbeat:** \`${timestamp}\`
-- **Last Tx Hash:** [\`${tx.hash}\`](https://sepolia.basescan.org/tx/${tx.hash})
+- **Last Tx:** [\`${tx.hash}\`](https://sepolia.basescan.org/tx/${tx.hash})
 
 ---
-*Generated automatically by Indraseven's Heartbeat Bot.*`;
+*Last updated: ${timestamp}*`;
 
-        fs.writeFileSync('README.md', content);
-        console.log("📝 README.md updated locally.");
-
-    } catch (err) {
-        console.error("❌ Failed:", err.message);
-    }
+    fs.writeFileSync('README.md', dashboard);
+    console.log("📝 README.md updated.");
 }
 
-main();
+main().catch(console.error);
