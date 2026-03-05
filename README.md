@@ -1,12 +1,17 @@
 # Indraseven's Web3 Monitor 🚀
 
+![Base Sepolia Status](https://img.shields.io/badge/Base_Sepolia-Active-brightgreen?style=for-the-badge&logo=base&logoColor=white)
+![Heartbeat](https://img.shields.io/badge/Heartbeat-Passing-success?style=for-the-badge&logo=github-actions&logoColor=white)
+
 > Automated by GitHub Actions & Termux.
 
-### 📊 Wallet Status (Base Sepolia)
-- **Address:** `0xC9aC55f435E4EB9ed09087B6329954374ac94b80`
-- **Balance:** `0.010296101159862645 ETH`
-- **Last Heartbeat:** `5/3/2026, 07.29.28`
-- **Last Tx:** [`0x250ffbf08728d171666f390574c9fc5d847103a57d558c44abe8b331ecedadde`](https://sepolia.basescan.org/tx/0x250ffbf08728d171666f390574c9fc5d847103a57d558c44abe8b331ecedadde)
+| 📊 Metrik | Keterangan |
+| :--- | :--- |
+| **Wallet Address** | `0xC9aC55f435E4EB9ed09087B6329954374ac94b80` |
+| **Network** | `Base Sepolia Testnet` |
+| **Current Balance** | `0.010295975159862471 ETH` |
+| **Last Heartbeat** | `Kamis, 05 Maret 2026 pukul 07.46.37 WIB` |
+| **Transaction Hash** | [`0x3d2db2e1e3b873c1956d50...`](https://sepolia.basescan.org/tx/0x3d2db2e1e3b873c1956d50684dcb413c92983aecc98f42d84f33c8297e963d80) |
 
 ---
-*Last updated: 5/3/2026, 07.29.28*
+*Status: Operasional - Diperbarui secara otomatis setiap hari via GitHub Actions.*
