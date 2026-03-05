@@ -23,7 +23,7 @@ jobs:
       - name: Push Updates
         run: |
           git config --global user.name "Indraseven"
-          git config --global user.email "Indrasevenid"
+          git config --global user.email "indrasevenid@gmail.com"
           git add README.md
           git commit -m "docs: auto-update dashboard [skip ci]" || exit 0
           git push
