@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import 'dotenv/config'; // Cara paling aman untuk ESM
 import { ethers } from 'ethers';
 import fs from 'fs';
 
