@@ -5,25 +5,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  active:
+  run:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # IZIN PENTING: Untuk update README
+      contents: write # IZIN WAJIB
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
       - run: npm install
-      - name: Run Heartbeat & Update README
+      - name: Run Heartbeat
         env:
           RPC_URL: ${{ secrets.RPC_URL }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: node src/monitor.js
-      - name: Commit & Push Changes
+      - name: Push Updates
         run: |
           git config --global user.name "Indraseven"
           git config --global user.email "Indrasevenid"
           git add README.md
-          git commit -m "docs: auto-update status [skip ci]" || echo "No changes"
+          git commit -m "docs: auto-update dashboard [skip ci]" || exit 0
           git push
+          
